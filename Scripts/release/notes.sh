@@ -1,5 +1,5 @@
 #!/bin/bash
-# 输出某个发布标签的更新说明（Markdown），用作 GitHub Release 的正文。
+# 输出某个发布标签的更新说明（纯文本 / 简化 Markdown），GitHub Release 与应用内更新窗口共用。
 # 取用顺序：
 #   1. ReleaseNotes/<版本>.md（推荐：随代码评审、可反复修改）
 #   2. 附注标签的说明（git tag -a v1.1.0 -F 说明.md）

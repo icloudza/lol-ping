@@ -22,7 +22,7 @@ final class AppController: ObservableObject {
     @Published private(set) var text: L10n
     @Published private(set) var room = RoomView()
     /// Nil when this build has no update checker.
-    @Published private(set) var updates: UpdateChecker.State?
+    @Published private(set) var updates: AppUpdater.Status?
     @Published private(set) var problems: [String] = []
     /// The settings pane to show; `serial` makes asking for the same pane twice a new request.
     @Published private(set) var paneRequest: (pane: String, serial: Int)?
@@ -33,8 +33,8 @@ final class AppController: ObservableObject {
     private let tap = EventTap()
     private var statusItem: StatusItemController?
     private var rooms: RoomGlue?
-    /// Nil when this build names no repository to look at.
-    private let updateChecker: UpdateChecker?
+    /// Nil in a build that carries no update address: every build but a released one.
+    private let updater: AppUpdater?
     private var accessPoll: Timer?
     private var isRecordingKey = false
     private var hasStarted = false
@@ -64,8 +64,8 @@ final class AppController: ObservableObject {
         let language = L10n(language: AppLanguage.resolve(store.preferences.language))
         text = language
         overlays = OverlayManager(preferences: store.preferences, text: language)
-        updateChecker = UpdateChecker(repository: Bundle.main.object(forInfoDictionaryKey: "LPUpdateRepo") as? String, currentVersion: Self.version)
-        updates = updateChecker?.state
+        updater = AppUpdater.isConfigured ? AppUpdater() : nil
+        updates = updater?.status
         store.onChange = { [unowned self] new, old in preferencesChanged(new, old) }
     }
 
@@ -86,7 +86,7 @@ final class AppController: ObservableObject {
             openSettings: { [unowned self] pane in showSettings(pane: pane) },
             setEnabled: { [unowned self] on in setEnabled(on) },
             quit: { NSApp.terminate(nil) },
-            update: { [unowned self] in updateFromMenu() },
+            update: { [unowned self] in checkForUpdates() },
             joinFromClipboard: { [unowned self] in
                 if let code = roomCodeOnClipboard() {
                     joinRoom(code) { _ in }
@@ -102,7 +102,7 @@ final class AppController: ObservableObject {
         statusItem = item
 
         startRoom()
-        startUpdateChecker()
+        startUpdater()
 
         tap.onAction = { [unowned self] action in
             switch action {
@@ -139,7 +139,6 @@ final class AppController: ObservableObject {
     func prepareToQuit(_ done: @escaping () -> Void) {
         guard hasStarted, !isQuitting else { return done() }
         isQuitting = true
-        updateChecker?.stop()
         accessPoll?.invalidate()
         tap.stop()
         store.saveNow()
@@ -363,7 +362,8 @@ final class AppController: ObservableObject {
             rooms?.setInternetAllowed(new.room.allowsInternet)
             refreshRoom()
         }
-        if new.updates.checksAutomatically != old.updates.checksAutomatically { updateChecker?.setAutomatic(new.updates.checksAutomatically) }
+        if new.updates.checksAutomatically != old.updates.checksAutomatically { updater?.setChecksAutomatically(new.updates.checksAutomatically) }
+        if new.updates.installsAutomatically != old.updates.installsAutomatically { updater?.setInstallsAutomatically(new.updates.installsAutomatically) }
         if new.opensAtLogin != old.opensAtLogin { applyLoginItem(new.opensAtLogin) }
     }
 
@@ -516,49 +516,32 @@ final class AppController: ObservableObject {
 
     // MARK: - Updates
 
-    private func startUpdateChecker() {
-        guard let checker = updateChecker else { return }
-        checker.onChange = { [unowned self] in updatesChanged() }
-        updatesChanged()
-        checker.setAutomatic(preferences.updates.checksAutomatically)
-    }
-
-    private func updatesChanged() {
-        guard !isQuitting, let checker = updateChecker else { return }
-        updates = checker.state
-        if case .available(let version, _) = checker.state {
-            statusItem?.updateItem = .get(version: version)
-            // Each release is pointed out once, not on every check.
-            if preferences.updates.announcedVersion != version {
-                store.update { $0.updates.announcedVersion = version }
-                overlays.notice(text.updateOut(version), text.updateOutHint)
-            }
-        } else {
-            statusItem?.updateItem = .check
+    private func startUpdater() {
+        guard let updater else { return }
+        updater.onChange = { [unowned self] in updaterChanged() }
+        updater.onFoundInBackground = { [unowned self] version in
+            // Each release is pointed out once; after that the menu and the settings keep saying it quietly.
+            guard !isQuitting, preferences.updates.announcedVersion != version else { return }
+            store.update { $0.updates.announcedVersion = version }
+            overlays.notice(text.updateOut(version), text.updateOutHint)
         }
+        updater.start(checksAutomatically: preferences.updates.checksAutomatically, installsAutomatically: preferences.updates.installsAutomatically)
+        updaterChanged()
     }
 
-    func checkForUpdates() { updateChecker?.check() }
-
-    /// From the menu there is no window to show the outcome in, so it is said with a notice.
-    private func updateFromMenu() {
-        guard let checker = updateChecker else { return }
-        if case .available = checker.state { return openReleasePage() }
-        checker.check { [weak self] result in
-            guard let self, !self.isQuitting else { return }
-            switch result {
-            case .upToDate: self.overlays.notice(self.text.noUpdate)
-            case .failed(let reason): self.overlays.notice(self.text.updateCheckFailedShort, reason)
-            default: break
-            }
-        }
+    private func updaterChanged() {
+        guard !isQuitting, let updater else { return }
+        updates = updater.status
+        statusItem?.updateItem = updater.status.pendingVersion.map { .get(version: $0) } ?? .check
     }
 
-    func openReleasePage() {
-        guard let checker = updateChecker else { return }
-        if case .available(_, let page) = checker.state { NSWorkspace.shared.open(page) } else { NSWorkspace.shared.open(checker.releasesPage) }
-    }
+    /// Shows the new version with its notes and an Install button, or says the app is up to date.
+    func checkForUpdates() { updater?.check() }
 
-    /// Nil when no repository is configured for this build.
-    var projectPage: URL? { updateChecker?.projectPage }
+    /// The project's page on GitHub; nil when this build names no repository.
+    static let projectPage: URL? = {
+        guard let repository = Bundle.main.object(forInfoDictionaryKey: "LPUpdateRepo") as? String,
+              repository.split(separator: "/").count == 2, !repository.contains(" ") else { return nil }
+        return URL(string: "https://github.com/\(repository)")
+    }()
 }

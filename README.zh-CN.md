@@ -16,6 +16,7 @@
 - **表情轮盘**：按住 ⌃ 拖动，可添加自己的图片（PNG、JPG、GIF、WebP）。
 - **房间**：凭房间码加入，局域网直连或经互联网中继，内容端到端加密；与 [darrenprx/lolPing](https://github.com/darrenprx/lolPing) 的 Windows / Mac 客户端互通。
 - **按键全部可改**：轮盘触发键支持修饰键组合、任意按键、鼠标侧键；暂停、静音、直接发送某个信号或表情都可绑定全局快捷键。
+- **在线更新**：新版本在应用内下载并安装。
 - **多显示器**、中英文界面、登录时启动。
 
 ## 安装
@@ -71,7 +72,7 @@ Debug 配置构建的是 **LolPing-Dev**（`com.cloudza.LolPing.dev`），设置
 
 ## 发布
 
-推送 `vX.Y.Z` 标签后，GitHub Actions 自动测试、签名、公证、打包 DMG 并创建 Release。应用会检查本仓库的最新 Release，有新版本时提醒，不会自动下载或安装。
+推送 `vX.Y.Z` 标签后，GitHub Actions 自动测试、签名、公证、打包 DMG 并创建 Release，同时附上签名的 appcast。已安装的应用通过 [Sparkle](https://sparkle-project.org) 在线更新：在应用内下载、校验、安装并自动重新打开。
 
 ## 友情链接
 

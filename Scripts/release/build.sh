@@ -10,6 +10,9 @@
 #   NOTARY_KEY_PATH / NOTARY_KEY_ID / NOTARY_ISSUER_ID
 #                         App Store Connect API 密钥（.p8 路径、密钥 ID、Issuer ID），用于公证；
 #                         本地试跑可以不给，此时跳过公证（产物不能分发）
+#   UPDATE_FEED_URL       appcast 地址，写进 Info.plist 的 SUFeedURL
+#   SPARKLE_PUBLIC_KEY    EdDSA 公钥，写进 SUPublicEDKey
+#                         两者缺一则应用里不启动在线更新；正式发布（非预发布）两者必填
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 
@@ -17,6 +20,12 @@ tag=${1:?用法：build.sh <标签>}
 eval "$(Scripts/release/version.sh "$tag")"
 : "${APPLE_TEAM_ID:?缺少 APPLE_TEAM_ID}"
 identity=${SIGNING_IDENTITY:-Developer ID Application}
+feed=${UPDATE_FEED_URL:-}
+public_key=${SPARKLE_PUBLIC_KEY:-}
+if [[ $PRERELEASE == false && ( -z $feed || -z $public_key ) ]]; then
+    echo "正式版必须提供 UPDATE_FEED_URL 与 SPARKLE_PUBLIC_KEY，否则用户装上后收不到后续更新。" >&2
+    exit 1
+fi
 
 out=build/release
 rm -rf "$out"
@@ -36,6 +45,7 @@ xcodebuild archive \
     -destination 'generic/platform=macOS' \
     -archivePath "$archive" -derivedDataPath "$out/DerivedData" \
     MARKETING_VERSION="$MARKETING_VERSION" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+    LP_UPDATE_FEED_URL="$feed" LP_UPDATE_PUBLIC_KEY="$public_key" \
     DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="$identity" \
     OTHER_CODE_SIGN_FLAGS="--timestamp" \
     | tee "$out/archive.log" | grep -E "^(error|warning: .*LolPing|\*\* )|: error: " || true
@@ -57,6 +67,21 @@ PLIST
 xcodebuild -exportArchive -archivePath "$archive" -exportOptionsPlist "$out/ExportOptions.plist" -exportPath "$out/export" \
     > "$out/export.log" 2>&1 || { tail -30 "$out/export.log" >&2; exit 1; }
 mv "$out/export/LolPing.app" "$app"
+
+# Sparkle 里的辅助程序（安装器、下载服务、Autoupdate、Updater.app）必须同样以 Developer ID + 加固运行时签名，
+# 否则公证拒收。按 Sparkle 文档由内到外逐个重签，最后重签应用本身（保留应用的权限声明）。
+echo "▶ 重签 Sparkle 组件"
+sparkle=$app/Contents/Frameworks/Sparkle.framework
+[[ -d $sparkle ]] || { echo "应用里没有 Sparkle.framework" >&2; exit 1; }
+sign() { codesign --force --timestamp --options runtime --sign "$identity" "$@"; }
+for item in "$sparkle/Versions/B/XPCServices/Installer.xpc" "$sparkle/Versions/B/XPCServices/Downloader.xpc"; do
+    [[ -e $item ]] && sign --preserve-metadata=entitlements "$item"
+done
+for item in "$sparkle/Versions/B/Autoupdate" "$sparkle/Versions/B/Updater.app"; do
+    [[ -e $item ]] && sign "$item"
+done
+sign "$sparkle"
+sign --preserve-metadata=entitlements "$app"
 codesign --verify --deep --strict --verbose=2 "$app"
 
 # 发布包必须是正式版的身份和版本号：Bundle ID 不能是开发版的，版本号要和标签一致（应用内的更新检查靠它比较）。
@@ -65,7 +90,11 @@ plist() { /usr/libexec/PlistBuddy -c "Print :$1" "$info"; }
 [[ $(plist CFBundleIdentifier) == com.cloudza.LolPing ]] || { echo "Bundle ID 不对：$(plist CFBundleIdentifier)" >&2; exit 1; }
 [[ $(plist CFBundleShortVersionString) == "$MARKETING_VERSION" ]] || { echo "版本号不对：$(plist CFBundleShortVersionString)" >&2; exit 1; }
 [[ $(plist CFBundleVersion) == "$BUILD_NUMBER" ]] || { echo "构建号不对：$(plist CFBundleVersion)" >&2; exit 1; }
-[[ -n $(plist LPUpdateRepo) ]] || { echo "Info.plist 的 LPUpdateRepo 是空的：装上后不会检查更新" >&2; exit 1; }
+# 发布包里必须真带着更新配置（构建设置没传进去时是空串，应用会静默地不检查更新）。
+if [[ -n $feed ]]; then
+    [[ $(plist SUFeedURL) == "$feed" ]] || { echo "Info.plist 的 SUFeedURL 不对：$(plist SUFeedURL)" >&2; exit 1; }
+    [[ $(plist SUPublicEDKey) == "$public_key" ]] || { echo "Info.plist 的 SUPublicEDKey 不对" >&2; exit 1; }
+fi
 
 notarize() {
     local file=$1 result=$out/notary-$(basename "$1").json

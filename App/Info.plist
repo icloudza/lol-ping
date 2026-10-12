@@ -30,5 +30,17 @@
 	<string>Code under the MIT licence. Ping and emote art and sounds © Riot Games.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>LolPing finds the other people in your room on the local network and sends them your pings.</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>$(LP_UPDATE_FEED_URL)</string>
+	<key>SUPublicEDKey</key>
+	<string>$(LP_UPDATE_PUBLIC_KEY)</string>
+	<key>SURequireSignedFeed</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<integer>3600</integer>
+	<key>SUVerifyUpdateBeforeExtraction</key>
+	<true/>
 </dict>
 </plist>

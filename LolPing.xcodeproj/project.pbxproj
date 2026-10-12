@@ -11,9 +11,11 @@
 		11EA24EF23F8236D6F80198E /* MenuBarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 512D2FD66283D1353B29D63D /* MenuBarIcon.png */; };
 		2669CF876520780FD6A82764 /* Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A6EE7296E5692531A9DDB4 /* Demo.swift */; };
 		2A00C93F5ACAD6192703BDE8 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 528A28933C21DFF4C1A9CEC7 /* sounds */; };
+		2A35699C2D0395BD03CAA714 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 853279A57570ED0463D6BD24 /* Sparkle */; };
 		36C94130B6E787807AD48C37 /* ToastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBA1D01B55EB9E18E8C20 /* ToastLayer.swift */; };
 		3862193081AF4393D6D203E4 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23191336BD058B0DA8AA1432 /* AppController.swift */; };
 		418FC7CFFCAB31CA82F09D3E /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30E6286465FC9A0504D8408 /* PermissionsView.swift */; };
+		4C326ED58A125C0F6228BE8A /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F81E5D59047C11218B2C95 /* AppUpdater.swift */; };
 		4ED8E8274429A77FB92B6BB1 /* WheelLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E5D1D7EA2EBF5D393897E6 /* WheelLayer.swift */; };
 		5783549DE4034DB2CA999E1E /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC19A97607FAE1ACF913F07 /* PreferencesStore.swift */; };
 		578CD83DCC7C702499B0FDAE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54775F3E488E0A3138F3A65 /* SettingsView.swift */; };
@@ -31,7 +33,6 @@
 		9CDE1A80BC5246E9F24FB2B1 /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60EE7660E932AFAE698E7E9 /* OverlayWindow.swift */; };
 		9DC897E7F11172198BC508EA /* OverlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2424480680C09FC1EECC66BA /* OverlayManager.swift */; };
 		9FA6BB3F2229D005AE5BE732 /* EmoteStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1BD7C62F2AFA30B3A58B6 /* EmoteStage.swift */; };
-		A210E845528CC9072EA577ED /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202C7DDA721FCD6537B5D206 /* UpdateChecker.swift */; };
 		B4238997858C17CB5ABB999D /* LPRooms in Frameworks */ = {isa = PBXBuildFile; productRef = DA73F2371D12A9E98F8FC8F9 /* LPRooms */; };
 		BEABE8399D106794617A9A80 /* AnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103C223839DF20971280489 /* AnimatedImage.swift */; };
 		C052D222F86A078D4DF21863 /* WheelEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940E37456605FB1540CA3669 /* WheelEditor.swift */; };
@@ -50,7 +51,6 @@
 		00E7046E55B5D54A6B8FE127 /* KeyCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCapture.swift; sourceTree = "<group>"; };
 		0125CA188474F81D404CF979 /* emotes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = emotes; path = App/Resources/emotes; sourceTree = SOURCE_ROOT; };
 		1F65F83C27D27DADCAE942A2 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
-		202C7DDA721FCD6537B5D206 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
 		23191336BD058B0DA8AA1432 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		2424480680C09FC1EECC66BA /* OverlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayManager.swift; sourceTree = "<group>"; };
 		32A6EE7296E5692531A9DDB4 /* Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Demo.swift; sourceTree = "<group>"; };
@@ -62,6 +62,7 @@
 		52F6963C90AD251FEFF02D1D /* EmoteLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoteLibrary.swift; sourceTree = "<group>"; };
 		577B9F4C997B6DDE775FE28F /* RoomGlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomGlue.swift; sourceTree = "<group>"; };
 		665CBA1D01B55EB9E18E8C20 /* ToastLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastLayer.swift; sourceTree = "<group>"; };
+		67F81E5D59047C11218B2C95 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		6E857BA8743AAE1914BF509F /* EventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTap.swift; sourceTree = "<group>"; };
 		7674F69F19188B40A98341C0 /* LPCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LPCore; path = Packages/LPCore; sourceTree = SOURCE_ROOT; };
 		77A1BD7C62F2AFA30B3A58B6 /* EmoteStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoteStage.swift; sourceTree = "<group>"; };
@@ -95,6 +96,7 @@
 			files = (
 				F7381E0FEAA08298B4495477 /* LPCore in Frameworks */,
 				B4238997858C17CB5ABB999D /* LPRooms in Frameworks */,
+				2A35699C2D0395BD03CAA714 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +205,7 @@
 		A21717A6B10988200B4C68F0 /* Update */ = {
 			isa = PBXGroup;
 			children = (
-				202C7DDA721FCD6537B5D206 /* UpdateChecker.swift */,
+				67F81E5D59047C11218B2C95 /* AppUpdater.swift */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -277,6 +279,7 @@
 			packageProductDependencies = (
 				1C6E2934C42F82A1DFCC6856 /* LPCore */,
 				DA73F2371D12A9E98F8FC8F9 /* LPRooms */,
+				853279A57570ED0463D6BD24 /* Sparkle */,
 			);
 			productName = LolPing;
 			productReference = A92D83C963494052E8552197 /* LolPing.app */;
@@ -307,6 +310,7 @@
 			mainGroup = 7E2F19216E70AA73833400F1;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				9DAFF667BB715FEA127F29AA /* XCRemoteSwiftPackageReference "Sparkle" */,
 				9718BF3D4982E484291C4F49 /* XCLocalSwiftPackageReference "Packages/LPCore" */,
 				CF4D1155A6C8436394C2F196 /* XCLocalSwiftPackageReference "Packages/LPRooms" */,
 			);
@@ -345,6 +349,7 @@
 			files = (
 				BEABE8399D106794617A9A80 /* AnimatedImage.swift in Sources */,
 				3862193081AF4393D6D203E4 /* AppController.swift in Sources */,
+				4C326ED58A125C0F6228BE8A /* AppUpdater.swift in Sources */,
 				82266C1478054D7C0C540279 /* BrandMark.swift in Sources */,
 				2669CF876520780FD6A82764 /* Demo.swift in Sources */,
 				FAAA78B8AE45B32B78A37BA1 /* EmoteLibrary.swift in Sources */,
@@ -366,7 +371,6 @@
 				D05F71EE1DC36BAFC4AA2F70 /* SoundBank.swift in Sources */,
 				6038D3ED4E2BDA47F9107538 /* StatusItemController.swift in Sources */,
 				36C94130B6E787807AD48C37 /* ToastLayer.swift in Sources */,
-				A210E845528CC9072EA577ED /* UpdateChecker.swift in Sources */,
 				C052D222F86A078D4DF21863 /* WheelEditor.swift in Sources */,
 				4ED8E8274429A77FB92B6BB1 /* WheelLayer.swift in Sources */,
 				08EE02C02EB9EB4C8DA084CB /* main.swift in Sources */,
@@ -425,7 +429,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -491,7 +495,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -515,6 +519,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LP_UPDATE_FEED_URL = "";
+				LP_UPDATE_PUBLIC_KEY = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cloudza.LolPing;
 				PRODUCT_NAME = LolPing;
 				SDKROOT = macosx;
@@ -534,6 +540,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LP_UPDATE_FEED_URL = "";
+				LP_UPDATE_PUBLIC_KEY = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cloudza.LolPing.dev;
 				PRODUCT_NAME = "LolPing-Dev";
 				SDKROOT = macosx;
@@ -575,10 +583,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		9DAFF667BB715FEA127F29AA /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		1C6E2934C42F82A1DFCC6856 /* LPCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LPCore;
+		};
+		853279A57570ED0463D6BD24 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DAFF667BB715FEA127F29AA /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		DA73F2371D12A9E98F8FC8F9 /* LPRooms */ = {
 			isa = XCSwiftPackageProductDependency;

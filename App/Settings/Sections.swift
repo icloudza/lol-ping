@@ -523,6 +523,9 @@ struct GeneralPane: View {
             if app.updates != nil {
                 RowDivider()
                 SwitchRow(title: t.autoCheck, hint: t.autoCheckHint, isOn: app.binding(\.updates.checksAutomatically))
+                RowDivider()
+                SwitchRow(title: t.autoInstall, hint: t.autoInstallHint, dimmed: !app.preferences.updates.checksAutomatically,
+                          isOn: app.binding(\.updates.installsAutomatically))
             }
             RowDivider()
             Row(title: t.permissions, hint: t.permissionsRowHint) {
@@ -547,12 +550,12 @@ struct GeneralPane: View {
                 }
                 Spacer(minLength: 12)
                 if let updates = app.updates {
-                    Button(updates == .checking ? t.checking : t.checkNow) { app.checkForUpdates() }.disabled(updates == .checking)
+                    Button(t.checkNow) { app.checkForUpdates() }.disabled(!updates.canCheck)
                 }
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
-            if let page = app.projectPage {
+            if let page = AppController.projectPage {
                 RowDivider()
                 Row(title: t.repository, hint: page.absoluteString.replacingOccurrences(of: "https://", with: "")) {
                     Button(t.openRepository) { NSWorkspace.shared.open(page) }
@@ -566,31 +569,25 @@ struct GeneralPane: View {
     }
 
     private var checkedNote: String? {
-        guard case .upToDate(let checked) = app.updates else { return nil }
+        guard let checked = app.updates?.lastCheck else { return nil }
         let clock = DateFormatter()
         clock.locale = app.text.language.locale
+        clock.doesRelativeDateFormatting = true
         clock.timeStyle = .short
-        clock.dateStyle = .none
-        return app.text.upToDate(checkedAt: clock.string(from: checked))
+        clock.dateStyle = .short
+        return app.text.lastChecked(clock.string(from: checked))
     }
 
+    /// A version found in the background, waiting to be looked at.
     @ViewBuilder
     private var updateCard: some View {
         let t = app.text
-        switch app.updates {
-        case .available(let version, _):
+        if let version = app.updates?.pendingVersion {
             NoticeCard(symbol: "arrow.down.circle", tint: .accentColor) {
                 Text(t.updateFound(version)).font(.headline)
                 Text(t.updateFoundHint).font(.callout).foregroundStyle(.secondary)
-                Button(t.viewRelease) { app.openReleasePage() }.buttonStyle(.borderedProminent)
+                Button(t.viewUpdate) { app.checkForUpdates() }.buttonStyle(.borderedProminent)
             }
-        case .failed(let reason):
-            NoticeCard(symbol: "exclamationmark.circle", tint: .red) {
-                Text(t.updateCheckFailed(reason)).fixedSize(horizontal: false, vertical: true)
-                Button(t.tryAgain) { app.checkForUpdates() }
-            }
-        default:
-            EmptyView()
         }
     }
 

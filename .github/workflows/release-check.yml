@@ -1,4 +1,4 @@
-# 发布前检查：逐项验证发布所需的签名证书与公证密钥，并确认工程能在运行器上生成和通过测试。
+# 发布前检查：逐项验证发布所需的签名证书、公证密钥与更新签名密钥，并确认工程能在运行器上生成和通过测试。
 # 手动触发（Actions → Release Check → Run workflow），不签名应用、不发版；
 # 各项互不依赖，一项失败其余照样检查，结果汇总在运行页面的 Summary 里。
 name: Release Check
@@ -49,6 +49,19 @@ jobs:
         run: |
           xcrun notarytool history --key "$NOTARY_KEY_PATH" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID" > /dev/null
           echo "✅ 公证密钥：App Store Connect 认证通过" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 更新签名密钥
+        if: always()
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+          SPARKLE_PUBLIC_KEY: ${{ vars.SPARKLE_PUBLIC_KEY }}
+        run: |
+          tools=$(Scripts/release/sparkle-tools.sh)
+          head -c 4096 /dev/urandom > "$RUNNER_TEMP/sparkle-check"
+          signature=$(printf '%s' "$SPARKLE_PRIVATE_KEY" | "$tools/sign_update" --ed-key-file - -p "$RUNNER_TEMP/sparkle-check")
+          swift Scripts/release/verify-signature.swift "$SPARKLE_PUBLIC_KEY" "$signature" "$RUNNER_TEMP/sparkle-check" \
+            || { echo "私钥与 SPARKLE_PUBLIC_KEY 不是一对"; exit 1; }
+          echo "✅ 更新签名密钥：私钥与公钥成对" >> "$GITHUB_STEP_SUMMARY"
 
       - name: 测试
         if: always()

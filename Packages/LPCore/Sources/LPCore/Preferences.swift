@@ -90,6 +90,8 @@ public struct Preferences: Codable, Equatable, Sendable {
 
     public struct Updates: Codable, Equatable, Sendable {
         public var checksAutomatically = true
+        /// Downloads a new version in the background and installs it when the app quits, without asking first.
+        public var installsAutomatically = false
         /// The newest version the app has already pointed out, so each release is announced once.
         public var announcedVersion: String?
 
@@ -329,6 +331,7 @@ extension Preferences.Updates {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         let d = Preferences.Updates()
         checksAutomatically = c.value(.checksAutomatically, or: d.checksAutomatically)
+        installsAutomatically = c.value(.installsAutomatically, or: d.installsAutomatically)
         announcedVersion = c.value(.announcedVersion, or: d.announcedVersion)
     }
 }

@@ -317,21 +317,21 @@ struct L10n: Equatable {
         }
     }
     var autoCheck: String { t("Check for updates automatically", "自动检查更新") }
-    var autoCheckHint: String { t("Tells you when a new version is out. Nothing is downloaded on its own.", "有新版本时提醒你，不会自动下载。") }
+    var autoCheckHint: String { t("Looks at launch and then every hour, and tells you when a new version is out.", "启动时和之后每小时查看一次，有新版本时提醒你。") }
+    var autoInstall: String { t("Install updates automatically", "自动下载并安装更新") }
+    var autoInstallHint: String { t("Downloads a new version in the background and installs it when \(Self.appName) quits.", "在后台下载新版本，退出 \(Self.appName) 时自动装好。") }
     var about: String { t("About", "关于") }
     func versionLine(_ version: String) -> String { t("Version \(version)", "版本 \(version)") }
     var checkNow: String { t("Check for Updates", "检查更新") }
-    var checking: String { t("Checking…", "正在检查…") }
     var repository: String { t("GitHub repository", "GitHub 仓库") }
     var openRepository: String { t("Open on GitHub", "在 GitHub 上打开") }
     var dataFolder: String { t("Data folder", "数据文件夹") }
     var dataFolderHint: String { t("Preferences and the images you added live here.", "偏好设置和你添加的表情图片都存在这里。") }
     var openDataFolder: String { t("Show in Finder", "在访达中显示") }
-    func upToDate(checkedAt time: String) -> String { t("Up to date · checked \(time)", "已是最新版本 · \(time) 检查") }
+    func lastChecked(_ time: String) -> String { t("Last checked \(time)", "上次检查：\(time)") }
     func updateFound(_ version: String) -> String { t("\(Self.appName) \(version) is out", "发现新版本 \(version)") }
-    var updateFoundHint: String { t("Download it from the release page.", "前往发布页下载。") }
-    var viewRelease: String { t("View Release", "查看新版本") }
-    func updateCheckFailed(_ reason: String) -> String { t("Couldn't check for updates: \(reason)", "检查更新失败：\(reason)") }
+    var updateFoundHint: String { t("It is downloaded and installed right here; \(Self.appName) restarts when it is done.", "直接在这里下载并安装，完成后 \(Self.appName) 会自动重新打开。") }
+    var viewUpdate: String { t("View and Install", "查看并安装") }
     var attention: String { t("Needs attention", "需要留意") }
     var goodToKnow: String { t("Good to know", "使用须知") }
     func notes(stableSignature: Bool) -> [String] {
@@ -363,7 +363,7 @@ struct L10n: Equatable {
     var menuLeaveRoom: String { t("Leave Room", "离开房间") }
     var menuSettings: String { t("Settings", "设置") }
     var menuCheckForUpdates: String { t("Check for Updates", "检查更新") }
-    func menuGetUpdate(_ version: String) -> String { t("Get \(Self.appName) \(version)", "下载新版本 \(version)") }
+    func menuGetUpdate(_ version: String) -> String { t("Install \(Self.appName) \(version)", "安装新版本 \(version)") }
     var menuQuit: String { t("Quit \(Self.appName)", "退出 \(Self.appName)") }
     func menuTooltip(on: Bool, needsAccess: Bool) -> String { needsAccess ? statusNeedsAccess : on ? statusOn : statusPaused }
 
@@ -385,9 +385,7 @@ struct L10n: Equatable {
     var noCodeOnClipboard: String { t("No room code on the clipboard", "剪贴板里没有房间码") }
     var noCodeOnClipboardHint: String { t("Copy the code a friend sent you first", "先复制朋友发来的房间码") }
     func updateOut(_ version: String) -> String { t("\(Self.appName) \(version) is out", "\(Self.appName) \(version) 已发布") }
-    var updateOutHint: String { t("See Settings → General", "在设置的「通用」里查看") }
-    var noUpdate: String { t("\(Self.appName) is up to date", "已是最新版本") }
-    var updateCheckFailedShort: String { t("Couldn't check for updates", "检查更新失败") }
+    var updateOutHint: String { t("Install it from the menu bar icon", "点菜单栏图标即可安装") }
 }
 
 extension L10n {

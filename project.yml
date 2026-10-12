@@ -10,10 +10,14 @@ packages:
     path: Packages/LPCore
   LPRooms:
     path: Packages/LPRooms
+  # In-app updates: download, signature check, swapping the app and relaunching.
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.10.0"
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.0.1"
+    MARKETING_VERSION: "1.0.2"
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_TEAM: KTP97H9YFF
     CODE_SIGN_STYLE: Automatic
@@ -37,6 +41,7 @@ targets:
       - package: LPCore
       - package: LPRooms
         product: LPRooms
+      - package: Sparkle
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.cloudza.LolPing
@@ -46,6 +51,10 @@ targets:
         ENABLE_APP_SANDBOX: NO
         COMBINE_HIDPI_IMAGES: YES
         SWIFT_STRICT_CONCURRENCY: minimal
+        # Where updates come from and the key that signs them. The release pipeline fills these in; left empty, as
+        # in every build made by hand, the app doesn't look for updates at all.
+        LP_UPDATE_FEED_URL: ""
+        LP_UPDATE_PUBLIC_KEY: ""
       configs:
         # The development build is its own app: its own name, bundle id, settings folder and Accessibility entry,
         # so running from Xcode never disturbs the permissions or settings of the released app.
@@ -62,6 +71,15 @@ targets:
         LSApplicationCategoryType: public.app-category.utilities
         NSHumanReadableCopyright: "Code under the MIT licence. Ping and emote art and sounds © Riot Games."
         NSLocalNetworkUsageDescription: "LolPing finds the other people in your room on the local network and sends them your pings."
-        # owner/repo on GitHub: the project page linked from Settings, and where update checks look for the latest
-        # release. Empty: no link and no update checks.
+        # owner/repo on GitHub: the project page linked from Settings. Empty: no link.
         LPUpdateRepo: icloudza/lol-ping
+        # In-app updates (Sparkle). The address and the key arrive as build settings from the release pipeline.
+        SUFeedURL: $(LP_UPDATE_FEED_URL)
+        SUPublicEDKey: $(LP_UPDATE_PUBLIC_KEY)
+        # Checks from the first launch on (no "may I check for updates?" prompt on the second one), at launch and
+        # then hourly, which is the shortest interval Sparkle allows. The switch is in Settings.
+        SUEnableAutomaticChecks: true
+        SUScheduledCheckInterval: 3600
+        # The EdDSA signature is checked before the download is unpacked, and the appcast itself must be signed.
+        SUVerifyUpdateBeforeExtraction: true
+        SURequireSignedFeed: true

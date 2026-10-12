@@ -16,6 +16,7 @@ A native Swift menu bar app (AppKit · SwiftUI · Core Animation) for Apple sili
 - **Emote wheel**: hold ⌃ and drag. Add your own images (PNG, JPG, GIF, WebP).
 - **Rooms**: join with a room code, directly over the local network or through internet relays, end-to-end encrypted. Compatible with the Windows and Mac clients of [darrenprx/lolPing](https://github.com/darrenprx/lolPing).
 - **Every key is configurable**: wheel triggers can be modifier combinations, any key, or a mouse side button; pause, mute, and sending a specific ping or emote can each have a global shortcut.
+- **In-app updates**: new versions download and install inside the app.
 - **Multiple displays**, English and Chinese interface, open at login.
 
 ## Install
@@ -71,7 +72,7 @@ The Debug configuration builds **LolPing-Dev** (`com.cloudza.LolPing.dev`), whos
 
 ## Releasing
 
-Pushing a `vX.Y.Z` tag makes GitHub Actions test, sign, notarize, package a DMG and create the release. The app checks this repository's latest release and tells you when a newer version is out; it never downloads or installs anything by itself.
+Pushing a `vX.Y.Z` tag makes GitHub Actions test, sign, notarize, package a DMG and create the release, together with a signed appcast. Installed copies update themselves from it through [Sparkle](https://sparkle-project.org): the new version is downloaded, verified, installed and relaunched inside the app.
 
 ## Links
 
