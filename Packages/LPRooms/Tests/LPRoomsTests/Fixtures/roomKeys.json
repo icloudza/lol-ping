@@ -1,0 +1,32 @@
+[
+ {
+  "code": "0000000000",
+  "display": "PING-00000-00000",
+  "msgKey": "2b8ef59047332409e1662fe75774f9383fcd16b655fcb3db975f0e80ad2043da",
+  "relayTopic": "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+ },
+ {
+  "code": "0000000011",
+  "display": "PING-00000-00011",
+  "msgKey": "b4716b3178e3075c4b85f5af3a67926c72e9d9b1c02e07a1a7475c3a1508f8f5",
+  "relayTopic": "ad0ca683a799e8c328f34a461d6b75e3321edd458b6704ddc945607cfa4c0969"
+ },
+ {
+  "code": "123456789T",
+  "display": "PING-12345-6789T",
+  "msgKey": "4dc9d92a948386d7e0718c85f51eb55b1ae665debeebace9db53d14818b11435",
+  "relayTopic": "1f719ab1688d6749c945b2dd2b9213e73846a09e43ac64076c26934dc554c0d7"
+ },
+ {
+  "code": "9999999992",
+  "display": "PING-99999-99992",
+  "msgKey": "edfb278420660b55b7491d7e9a23b493bd35548c50e41b84ed23cdf3daab00bc",
+  "relayTopic": "193729be232f2aec380fc087f62ca59f738c0eb65d94c3992f65f2d0647e3ee9"
+ },
+ {
+  "code": "ZYZ0H83059",
+  "display": "PING-ZYZ0H-83059",
+  "msgKey": "f0ecd882005b15e5f4d55f1ff3697c6aca0190c100dee26a594ebce184cb3d64",
+  "relayTopic": "e88480a228d1694b9ea6cab38a0ca2c9f7ec79485335afa12ad5728c3eb744d4"
+ }
+]

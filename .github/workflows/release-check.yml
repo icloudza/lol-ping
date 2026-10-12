@@ -1,0 +1,76 @@
+# 发布前检查：逐项验证发布所需的签名证书与公证密钥，并确认工程能在运行器上生成和通过测试。
+# 手动触发（Actions → Release Check → Run workflow），不签名应用、不发版；
+# 各项互不依赖，一项失败其余照样检查，结果汇总在运行页面的 Summary 里。
+name: Release Check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ${{ vars.MACOS_RUNNER || 'macos-26' }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 选择 Xcode
+        run: |
+          xcode="${{ vars.XCODE_PATH }}"
+          if [ -z "$xcode" ]; then
+            xcode=$(ls -d /Applications/Xcode_*.app | grep -v -i beta | sort -V | tail -1)
+          fi
+          sudo xcode-select -s "$xcode"
+          echo "✅ Xcode：$(xcodebuild -version | tr '\n' ' ')" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 签名证书
+        if: always()
+        env:
+          CERTIFICATE_P12: ${{ secrets.MACOS_CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+          NOTARY_KEY: ${{ secrets.NOTARY_KEY }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          Scripts/release/import-certificate.sh
+          # 实际签一个小程序，并核对证书的团队 ID 与 APPLE_TEAM_ID 一致。
+          cp /usr/bin/true "$RUNNER_TEMP/sign-check"
+          codesign --force --timestamp --options runtime --sign "Developer ID Application" "$RUNNER_TEMP/sign-check"
+          team=$(codesign -dv "$RUNNER_TEMP/sign-check" 2>&1 | sed -n 's/^TeamIdentifier=//p')
+          [ "$team" = "$APPLE_TEAM_ID" ] || { echo "证书团队 $team 与 APPLE_TEAM_ID 不一致"; exit 1; }
+          echo "✅ 签名证书：Developer ID，团队 $team" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 公证密钥
+        if: always()
+        env:
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER_ID: ${{ secrets.NOTARY_ISSUER_ID }}
+        run: |
+          xcrun notarytool history --key "$NOTARY_KEY_PATH" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID" > /dev/null
+          echo "✅ 公证密钥：App Store Connect 认证通过" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 测试
+        if: always()
+        run: |
+          swift test --package-path Packages/LPCore
+          swift test --package-path Packages/LPRooms
+          echo "✅ 测试：LPCore 与 LPRooms 全部通过" >> "$GITHUB_STEP_SUMMARY"
+
+      # 不签名地编译一遍 Release：确认运行器上的 Xcode 能生成工程并编过。
+      - name: 编译
+        if: always()
+        run: |
+          command -v xcodegen > /dev/null || brew install xcodegen
+          xcodegen generate --quiet
+          xcodebuild build -project LolPing.xcodeproj -scheme LolPing -configuration Release \
+            -destination 'generic/platform=macOS' -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO | grep -E "^(error|\*\* )|: error: " || true
+          [ -d "$RUNNER_TEMP/DerivedData/Build/Products/Release/LolPing.app" ] || { echo "Release 编译失败"; exit 1; }
+          echo "✅ 编译：Release 配置编译通过" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 清理
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/release.keychain-db" 2> /dev/null || true
+          rm -f "$RUNNER_TEMP/notary.p8"

@@ -1,0 +1,2 @@
+# 测试夹具按原样入库，不转换换行符（其中有来自上游、带 CRLF 的测试向量）
+Packages/LPRooms/Tests/LPRoomsTests/Fixtures/** -text

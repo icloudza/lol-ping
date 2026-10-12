@@ -1,0 +1,468 @@
+[
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": 24747,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"lolping\",{\"id\":\"81ec428970ebdae1bc4cdd50c22407494664ae862cc828965432bfab134f0e44\",\"pubkey\":\"f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9\",\"created_at\":1700003000,\"kind\":24747,\"tags\":[[\"t\",\"名前\"]],\"content\":\"ATgZ7jND6dr3WvjfmRIL8qZ19OU8FGjoX4ynz3Z0bRpHMoL/rRFxRGDmaZQ/cGKXtoCAtHXYqZo2kbaQJBy2YGqkhXkXivDrcbrmcrI2/BW11KrhcnFxpKu4m3nX+tatPtuJwxyLOvYzrdXuekd78gdx8KC4PmKANdRrRejaMWZC5GA+StpY8ZhfbpkuCAxOIS9hl6s0CPGkMUFYf5vkHQ==\",\"sig\":\"3a2049869b397266a59a1b5bbe7a82c4c5185b934b9e27acd534b6aa4973b528761a81bd1b8402e639c6cf673cbdeb0d098bbbeb89841f46626ef3dd323eae22\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "lolping",
+   "event": {
+    "id": "81ec428970ebdae1bc4cdd50c22407494664ae862cc828965432bfab134f0e44",
+    "pubkey": "f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9",
+    "created_at": 1700003000,
+    "kind": 24747,
+    "tags": [
+     [
+      "t",
+      "名前"
+     ]
+    ],
+    "content": "ATgZ7jND6dr3WvjfmRIL8qZ19OU8FGjoX4ynz3Z0bRpHMoL/rRFxRGDmaZQ/cGKXtoCAtHXYqZo2kbaQJBy2YGqkhXkXivDrcbrmcrI2/BW11KrhcnFxpKu4m3nX+tatPtuJwxyLOvYzrdXuekd78gdx8KC4PmKANdRrRejaMWZC5GA+StpY8ZhfbpkuCAxOIS9hl6s0CPGkMUFYf5vkHQ==",
+    "sig": "3a2049869b397266a59a1b5bbe7a82c4c5185b934b9e27acd534b6aa4973b528761a81bd1b8402e639c6cf673cbdeb0d098bbbeb89841f46626ef3dd323eae22"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"lolping\",{\"id\":\"79fbc588164126fa9300116853bf19628b56917dd24ebf64f73a2a718f12abea\",\"pubkey\":\"6ecfcfe9772a753bfd75fb01eb32d612d8c79269ccb959f2a10a225c642a3eb9\",\"created_at\":1780000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"ctrl \\u0001\\u001f del  nbsp   ls   ps  \",\"sig\":\"8e5813c3463904106fcf59f3c302dbec4b56dad92063ac230d89264f2296b1395111044f72f300397ee6e13bc07f46e760411e7d62831fd5f8ae0a966ee0dee1\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "lolping",
+   "event": {
+    "id": "79fbc588164126fa9300116853bf19628b56917dd24ebf64f73a2a718f12abea",
+    "pubkey": "6ecfcfe9772a753bfd75fb01eb32d612d8c79269ccb959f2a10a225c642a3eb9",
+    "created_at": 1780000000,
+    "kind": 24747,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "ctrl \u0001\u001f del  nbsp   ls   ps  ",
+    "sig": "8e5813c3463904106fcf59f3c302dbec4b56dad92063ac230d89264f2296b1395111044f72f300397ee6e13bc07f46e760411e7d62831fd5f8ae0a966ee0dee1"
+   }
+  }
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",false,\"rate-limited: slow down\"]",
+  "result": {
+   "type": "OK",
+   "eventId": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+   "ok": false,
+   "message": "rate-limited: slow down"
+  }
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",true]",
+  "result": {
+   "type": "OK",
+   "eventId": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+   "ok": true,
+   "message": ""
+  }
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",true,\"\"]",
+  "result": {
+   "type": "OK",
+   "eventId": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+   "ok": true,
+   "message": ""
+  }
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",true,5]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",true,null]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",1,\"\"]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"yes\",\"\"]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\",\"short\",true,\"\"]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\",\"7D22A3A16161B675BBD38982A03F7E8C10C5A5B681DD74212BDD3DD8A0E1474A\",true,\"\"]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\"]",
+  "result": null
+ },
+ {
+  "text": "[\"OK\"]",
+  "result": null
+ },
+ {
+  "text": "[\"EOSE\",\"s\"]",
+  "result": {
+   "type": "EOSE",
+   "subId": "s"
+  }
+ },
+ {
+  "text": "[\"EOSE\"]",
+  "result": null
+ },
+ {
+  "text": "[\"EOSE\",5]",
+  "result": null
+ },
+ {
+  "text": "[\"CLOSED\",\"s\",\"error: shutting down\"]",
+  "result": {
+   "type": "CLOSED",
+   "subId": "s",
+   "message": "error: shutting down"
+  }
+ },
+ {
+  "text": "[\"CLOSED\",\"s\"]",
+  "result": {
+   "type": "CLOSED",
+   "subId": "s",
+   "message": ""
+  }
+ },
+ {
+  "text": "[\"CLOSED\",\"s\",7]",
+  "result": null
+ },
+ {
+  "text": "[\"CLOSED\"]",
+  "result": null
+ },
+ {
+  "text": "[\"NOTICE\",\"hello\"]",
+  "result": {
+   "type": "NOTICE",
+   "message": "hello"
+  }
+ },
+ {
+  "text": "[\"NOTICE\"]",
+  "result": null
+ },
+ {
+  "text": "[\"NOTICE\",1]",
+  "result": null
+ },
+ {
+  "text": "not json",
+  "result": null
+ },
+ {
+  "text": "{\"a\":1}",
+  "result": null
+ },
+ {
+  "text": "[]",
+  "result": null
+ },
+ {
+  "text": "[1]",
+  "result": null
+ },
+ {
+  "text": "[\"AUTH\",\"challenge\"]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\"]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\"]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",5,{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",null]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",[{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",\"x\"]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"xyz\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7D22A3A16161B675BBD38982A03F7E8C10C5A5B681DD74212BDD3DD8A0E1474A\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"ab\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1.5,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":-1,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":\"1\",\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1152921504606847000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":true,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":\"24747\",\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":1.5,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":-5,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": -5,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":true,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",1]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":\"x\",\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": 24747,
+    "tags": [
+     []
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": 24747,
+    "tags": [],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[\"x\"],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",null]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":null,\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":5,\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":null,\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\",\"extra\":1}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": 24747,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"__proto__\":{\"polluted\":1},\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": 24747,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"},\"more\"]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1700000000,
+    "kind": 24747,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ },
+ {
+  "text": "[\"event\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": null
+ },
+ {
+  "text": " [\"NOTICE\" , \"spaced\" ] ",
+  "result": {
+   "type": "NOTICE",
+   "message": "spaced"
+  }
+ },
+ {
+  "text": "[\"NOTICE\",\"a\\u00e9\\n\"]",
+  "result": {
+   "type": "NOTICE",
+   "message": "aé\n"
+  }
+ },
+ {
+  "text": "[\"OK\",\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",false,\"blocked: no\"]",
+  "result": {
+   "type": "OK",
+   "eventId": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+   "ok": false,
+   "message": "blocked: no"
+  }
+ },
+ {
+  "text": "[\"EVENT\",\"s\",{\"id\":\"7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a\",\"pubkey\":\"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798\",\"created_at\":1e3,\"x\":1700000000,\"kind\":24747,\"tags\":[[\"x\",\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"]],\"content\":\"\",\"sig\":\"07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272\"}]",
+  "result": {
+   "type": "EVENT",
+   "subId": "s",
+   "event": {
+    "id": "7d22a3a16161b675bbd38982a03f7e8c10c5a5b681dd74212bdd3dd8a0e1474a",
+    "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "created_at": 1000,
+    "kind": 24747,
+    "tags": [
+     [
+      "x",
+      "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910"
+     ]
+    ],
+    "content": "",
+    "sig": "07eec5eb4baed6cbc12bb7f415bd00f8c89a6d65b03452fe139fd3d5d540d755e71f982d46a18e1632301b599f909c7af6eebc72d7477bab00205492e8399272"
+   }
+  }
+ }
+]

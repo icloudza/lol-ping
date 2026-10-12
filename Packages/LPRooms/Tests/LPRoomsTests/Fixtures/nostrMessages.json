@@ -1,0 +1,6 @@
+{
+ "req": "[\"REQ\",\"lolping\",{\"kinds\":[24747],\"#x\":[\"0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910\"],\"since\":1779999400,\"limit\":0}]",
+ "reqTopic": "0381782f350540d4639958bed594ae3b2b1a3d11683146e542edb34db89b6910",
+ "reqSince": 1779999400,
+ "close": "[\"CLOSE\",\"lolping\"]"
+}

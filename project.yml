@@ -1,0 +1,67 @@
+name: LolPing
+options:
+  bundleIdPrefix: com.cloudza
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+packages:
+  LPCore:
+    path: Packages/LPCore
+  LPRooms:
+    path: Packages/LPRooms
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: KTP97H9YFF
+    CODE_SIGN_STYLE: Automatic
+targets:
+  LolPing:
+    type: application
+    platform: macOS
+    sources:
+      - path: App
+        excludes:
+          - "Resources/textures"
+          - "Resources/sounds"
+          - "Resources/emotes"
+      - path: App/Resources/textures
+        type: folder
+      - path: App/Resources/sounds
+        type: folder
+      - path: App/Resources/emotes
+        type: folder
+    dependencies:
+      - package: LPCore
+      - package: LPRooms
+        product: LPRooms
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cloudza.LolPing
+        PRODUCT_NAME: LolPing
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_HARDENED_RUNTIME: YES
+        ENABLE_APP_SANDBOX: NO
+        COMBINE_HIDPI_IMAGES: YES
+        SWIFT_STRICT_CONCURRENCY: minimal
+      configs:
+        # The development build is its own app: its own name, bundle id, settings folder and Accessibility entry,
+        # so running from Xcode never disturbs the permissions or settings of the released app.
+        Debug:
+          PRODUCT_BUNDLE_IDENTIFIER: com.cloudza.LolPing.dev
+          PRODUCT_NAME: LolPing-Dev
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: $(PRODUCT_NAME)
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSUIElement: true
+        LSApplicationCategoryType: public.app-category.utilities
+        NSHumanReadableCopyright: "Code under the MIT licence. Ping and emote art and sounds © Riot Games."
+        NSLocalNetworkUsageDescription: "LolPing finds the other people in your room on the local network and sends them your pings."
+        # owner/repo on GitHub: the project page linked from Settings, and where update checks look for the latest
+        # release. Empty: no link and no update checks.
+        LPUpdateRepo: icloudza/lol-ping

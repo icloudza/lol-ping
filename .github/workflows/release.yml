@@ -1,0 +1,117 @@
+# 发布 LolPing：推送 vX.Y.Z 标签即触发（预发布用 vX.Y.Z-beta.N / vX.Y.Z-rc.N）。
+# 流程：测试 → Developer ID 签名 → 公证 → DMG → GitHub Release。
+# 应用内的更新检查读的就是这个仓库的最新 Release，所以发布完成后，已安装的用户会收到提醒。
+# 需要的 Secrets / Variables 见 Scripts/release/README.md。
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 要（重新）发布的已有标签，例如 v1.1.0
+        required: true
+
+permissions:
+  contents: write
+
+# 同一时间只跑一个发布，后来的排队，不取消正在公证或上传的那个。
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ${{ vars.MACOS_RUNNER || 'macos-26' }}
+    timeout-minutes: 90
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          fetch-depth: 0
+
+      # checkout 会把附注标签改写成轻量标签，重新取回才能读到标签里的更新说明。
+      - name: 取回标签
+        run: git fetch --force --tags origin
+
+      - name: 版本号
+        run: |
+          Scripts/release/version.sh "$TAG" | tee -a "$GITHUB_ENV"
+
+      - name: 选择 Xcode
+        run: |
+          xcode="${{ vars.XCODE_PATH }}"
+          if [ -z "$xcode" ]; then
+            xcode=$(ls -d /Applications/Xcode_*.app | grep -v -i beta | sort -V | tail -1)
+          fi
+          sudo xcode-select -s "$xcode"
+          xcodebuild -version
+
+      - name: 安装 XcodeGen
+        run: command -v xcodegen > /dev/null || brew install xcodegen
+
+      # 手势引擎、偏好设置和房间协议的单元测试；不过就不发版。
+      - name: 测试
+        run: |
+          swift test --package-path Packages/LPCore
+          swift test --package-path Packages/LPRooms
+
+      - name: 导入签名证书
+        env:
+          CERTIFICATE_P12: ${{ secrets.MACOS_CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+          NOTARY_KEY: ${{ secrets.NOTARY_KEY }}
+        run: Scripts/release/import-certificate.sh
+
+      - name: 构建、签名、公证
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER_ID: ${{ secrets.NOTARY_ISSUER_ID }}
+        run: Scripts/release/build.sh "$TAG"
+
+      - name: 更新说明
+        run: Scripts/release/notes.sh "$TAG" --github > "$RUNNER_TEMP/notes.md" && cat "$RUNNER_TEMP/notes.md"
+
+      - name: GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          dmg="build/release/LolPing-$VERSION.dmg"
+          publish() {
+            if gh release view "$TAG" > /dev/null 2>&1; then
+              gh release upload "$TAG" "$dmg" --clobber
+            else
+              flags=()
+              [ "$PRERELEASE" = true ] && flags+=(--prerelease)
+              gh release create "$TAG" "$dmg" --verify-tag --title "LolPing $VERSION" --notes-file "$RUNNER_TEMP/notes.md" "${flags[@]}"
+            fi
+          }
+          # GitHub 接口偶尔返回 500：间隔逐次加长重试，总共约 10 分钟。
+          for wait in 30 60 120 180 240 0; do
+            publish && exit 0
+            [ "$wait" -eq 0 ] && break
+            echo "创建 Release 失败，${wait} 秒后重试"
+            sleep "$wait"
+          done
+          echo "::error::多次重试仍无法创建 GitHub Release；安装包已构建并公证，可稍后重跑本任务补上。"
+          exit 1
+
+      # Release 没建成时，安装包至少还能从运行页面取到。
+      - name: 保留安装包
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: LolPing-${{ env.VERSION }}
+          path: build/release/*.dmg
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: 清理钥匙串与密钥
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/release.keychain-db" 2> /dev/null || true
+          rm -f "$RUNNER_TEMP/notary.p8"
