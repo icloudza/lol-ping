@@ -1,4 +1,5 @@
 import AppKit
+import LPCore
 import SwiftUI
 
 /// A menu bar app: no Dock icon except while the settings window is open.
@@ -64,6 +65,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 host.cacheDisplay(in: host.bounds, to: picture)
                 try? picture.representation(using: .png, properties: [:])?.write(to: folder.appendingPathComponent("permissions-\(name).png"))
             }
+            exit(0)
+        }
+        // Development only: `LOLPING_DEMO=audio` times how long the calling thread is held by the sound calls after
+        // the hardware has gone to sleep, and checks that a sound really starts. It plays one tick, all but silent.
+        if ProcessInfo.processInfo.environment["LOLPING_DEMO"] == "audio" {
+            let sounds = SoundBank()
+            var loaded = false
+            sounds.loadBundled { loaded = true }
+            while !loaded { RunLoop.current.run(until: Date().addingTimeInterval(0.05)) }
+            func held(_ work: () -> Void) -> String {
+                let began = CFAbsoluteTimeGetCurrent()
+                work()
+                return String(format: "%.1f ms", (CFAbsoluteTimeGetCurrent() - began) * 1000)
+            }
+            print("warmUp held the caller for", held { sounds.warmUp() })
+            print("play held the caller for", held { sounds.play(PingCatalog.tickSound, volume: 0.001) })
+            let began = CFAbsoluteTimeGetCurrent()
+            let state = sounds.debugState()
+            print(String(format: "hardware up after %.0f ms: running=%@ playing=%d", (CFAbsoluteTimeGetCurrent() - began) * 1000, state.running ? "yes" : "no", state.playing))
             exit(0)
         }
         // Development only: `LOLPING_DEMO=switch:<file.png>` draws the menu's switch rows (on, off, unavailable) into a

@@ -2,16 +2,22 @@ import AVFoundation
 import LPCore
 
 /// Pre-decoded sounds played through one audio engine, so a ping's sound starts with no noticeable delay.
+///
+/// Everything that touches the engine happens on a queue of its own. Starting the audio hardware takes a few hundred
+/// milliseconds, and it has to be started again whenever nothing has played for a while; done on the main thread,
+/// that is a wheel that hangs before it appears.
 final class SoundBank {
     /// Safety ceiling: more overlapping sounds than this are skipped (the ping still shows).
     static let maxVoices = 8
 
     private let engine = AVAudioEngine()
     private let format = AVAudioFormat(standardFormatWithSampleRate: 48_000, channels: 2)!
+    /// Serial. The engine, the players and everything below are used on it and nowhere else.
+    private let queue = DispatchQueue(label: "lolping.audio", qos: .userInteractive)
     private var players: [AVAudioPlayerNode] = []
     private var busy: [Bool]
     private var buffers: [String: AVAudioPCMBuffer] = [:]
-    private var idleTimer: Timer?
+    private var idleStop: DispatchWorkItem?
     private let loadQueue = DispatchQueue(label: "lolping.sounds", qos: .userInitiated)
 
     init() {
@@ -22,9 +28,9 @@ final class SoundBank {
             engine.connect(p, to: engine.mainMixerNode, format: format)
             players.append(p)
         }
-        NotificationCenter.default.addObserver(forName: .AVAudioEngineConfigurationChange, object: engine, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: .AVAudioEngineConfigurationChange, object: engine, queue: nil) { [weak self] _ in
             // The output device changed: the engine has stopped and restarts with the next sound.
-            self?.busy = Array(repeating: false, count: Self.maxVoices)
+            self?.queue.async { self?.busy = Array(repeating: false, count: Self.maxVoices) }
         }
     }
 
@@ -43,9 +49,9 @@ final class SoundBank {
             for (key, url) in entries {
                 if let buffer = Self.decode(url, to: format) { decoded[key] = buffer }
             }
-            DispatchQueue.main.async {
+            self.queue.async {
                 self.buffers.merge(decoded) { _, new in new }
-                completion()
+                DispatchQueue.main.async(execute: completion)
             }
         }
     }
@@ -72,32 +78,50 @@ final class SoundBank {
         return status == .error ? nil : out
     }
 
-    /// Starts the audio hardware ahead of the first sound (when a wheel opens).
+    /// Starts the audio hardware ahead of the first sound (when a wheel opens). Returns at once; the hardware comes
+    /// up in the background.
     func warmUp() {
+        queue.async { self.start() }
+    }
+
+    /// Returns at once. After a quiet spell the sound follows as soon as the hardware is up again.
+    func play(_ key: String, volume: Double) {
+        guard volume > 0 else { return }
+        queue.async {
+            guard let buffer = self.buffers[key], let voice = self.busy.firstIndex(of: false) else { return }
+            self.start()
+            guard self.engine.isRunning else { return }
+            let player = self.players[voice]
+            self.busy[voice] = true
+            player.volume = Float(min(1, volume))
+            player.scheduleBuffer(buffer, at: nil, options: [], completionCallbackType: .dataPlayedBack) { _ in
+                self.queue.async { self.busy[voice] = false }
+            }
+            player.play()
+            self.scheduleIdleStop()
+        }
+    }
+
+    #if DEBUG
+    /// Development only: whether the hardware is up and how many sounds are playing, once the queue has caught up.
+    func debugState() -> (running: Bool, playing: Int) {
+        queue.sync { (engine.isRunning, players.filter(\.isPlaying).count) }
+    }
+    #endif
+
+    // MARK: - On the audio queue
+
+    private func start() {
         guard !engine.isRunning else { return }
         engine.prepare()
         try? engine.start()
         scheduleIdleStop()
     }
 
-    func play(_ key: String, volume: Double) {
-        guard volume > 0, let buffer = buffers[key], let voice = busy.firstIndex(of: false) else { return }
-        warmUp()
-        guard engine.isRunning else { return }
-        let player = players[voice]
-        busy[voice] = true
-        player.volume = Float(min(1, volume))
-        player.scheduleBuffer(buffer, at: nil, options: [], completionCallbackType: .dataPlayedBack) { [weak self] _ in
-            DispatchQueue.main.async { self?.busy[voice] = false }
-        }
-        player.play()
-        scheduleIdleStop()
-    }
-
     /// Lets the audio hardware sleep when nothing has played for a while.
     private func scheduleIdleStop() {
-        idleTimer?.invalidate()
-        idleTimer = Timer.scheduledTimer(withTimeInterval: 20, repeats: false) { [weak self] _ in
+        idleStop?.cancel()
+        let stop = DispatchWorkItem { [weak self] in
             guard let self else { return }
             if self.busy.contains(true) {
                 self.scheduleIdleStop()
@@ -105,5 +129,7 @@ final class SoundBank {
                 self.engine.pause()
             }
         }
+        idleStop = stop
+        queue.asyncAfter(deadline: .now() + 20, execute: stop)
     }
 }
