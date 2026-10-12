@@ -4,9 +4,11 @@
 ![Platform](https://img.shields.io/badge/macOS-14%2B-blue)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+**League of Legends ping wheel and emotes for the macOS desktop.**
+
 把英雄联盟的信号轮盘和表情带到 macOS 桌面：在任何应用、任何显示器上发信号，并和朋友在同一个房间里互相看到。
 
-原生 Swift 应用（AppKit · SwiftUI · Core Animation），常驻菜单栏。
+原生 Swift 菜单栏应用（AppKit · SwiftUI · Core Animation），支持 Apple 芯片与 Intel。
 
 ## 功能
 
@@ -71,10 +73,14 @@ Debug 配置构建的是 **LolPing-Dev**（`com.cloudza.LolPing.dev`），设置
 
 推送 `vX.Y.Z` 标签后，GitHub Actions 自动测试、签名、公证、打包 DMG 并创建 Release。应用会检查本仓库的最新 Release，有新版本时提醒，不会自动下载或安装。
 
+## 友情链接
+
+- [LINUX DO](https://linux.do)
+
 ## 许可证
 
 代码采用 [MIT 许可证](LICENSE)。`Packages/LPRooms` 移植自 [darrenprx/lolPing](https://github.com/darrenprx/lolPing)（© Danrui Meng，MIT）。
 
-`App/Resources` 中的信号图标、表情和音效版权归 Riot Games 所有，不在 MIT 许可范围内。
+`App/Resources` 中的信号图标、表情和音效版权归 Riot Games 所有，不在 MIT 许可范围内，详见 [NOTICE.md](NOTICE.md)。
 
 LolPing isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

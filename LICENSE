@@ -1,7 +1,7 @@
 MIT License
 
 Copyright (c) 2026 the LolPing (macOS) contributors
-Copyright (c) 2026 Danrui Meng (Packages/LPRooms is ported from lolPing, https://github.com/darrenprx/lolPing)
+Copyright (c) 2026 Danrui Meng
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,13 +20,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This license covers the source code only. The ping icons, emote animations and
-sounds in App/Resources (textures, sounds, emotes) are © Riot Games, Inc.,
-extracted from League of Legends by the upstream project, and are not licensed
-under the MIT License. LolPing isn't endorsed by Riot Games and doesn't reflect
-the views or opinions of Riot Games or anyone officially involved in producing
-or managing Riot Games properties. Riot Games, and all associated properties
-are trademarks or registered trademarks of Riot Games, Inc.
