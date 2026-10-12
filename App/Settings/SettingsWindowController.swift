@@ -39,6 +39,6 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
         // A key recorder that was listening when the window closed can't tidy up after itself.
         AppController.shared.setRecordingKey(false)
-        NSApp.setActivationPolicy(.accessory)
+        AppWindows.didClose(notification.object as? NSWindow)
     }
 }

@@ -50,6 +50,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 host.cacheDisplay(in: host.bounds, to: picture)
                 try? picture.representation(using: .png, properties: [:])?.write(to: folder.appendingPathComponent("\(pane.rawValue).png"))
             }
+            // The permissions window in each of its states, drawn the same way.
+            let states: [(String, AppController.AccessStep, RoomView.Link)] = [
+                ("ask", .ask, .off), ("switch-on", .switchOn, .off), ("stale", .stale, .unavailable), ("granted", .granted, .ok),
+            ]
+            for (name, step, lan) in states {
+                let host = NSHostingView(rootView: PermissionsView(preview: (step, lan)).environmentObject(AppController.shared))
+                let window = NSWindow(contentRect: NSRect(origin: .zero, size: PermissionsView.size), styleMask: [.titled, .fullSizeContentView], backing: .buffered, defer: false)
+                window.contentView = host
+                host.layoutSubtreeIfNeeded()
+                RunLoop.current.run(until: Date().addingTimeInterval(0.3))
+                guard let picture = host.bitmapImageRepForCachingDisplay(in: host.bounds) else { continue }
+                host.cacheDisplay(in: host.bounds, to: picture)
+                try? picture.representation(using: .png, properties: [:])?.write(to: folder.appendingPathComponent("permissions-\(name).png"))
+            }
             exit(0)
         }
         // Development only: `LOLPING_DEMO=switch:<file.png>` draws the menu's switch rows (on, off, unavailable) into a

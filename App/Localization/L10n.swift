@@ -53,26 +53,42 @@ struct L10n: Equatable {
         return how + (shortcut.map { t(" \($0) pauses.", "按 \($0) 暂停。") } ?? "")
     }
 
-    // MARK: Accessibility
+    // MARK: Permissions
 
-    var accessTitle: String { t("Let \(Self.appName) use Accessibility", "允许 \(Self.appName) 使用辅助功能") }
-    var accessSteps: [String] {
-        [
-            t("Open System Settings with the button below.", "点下面的按钮打开系统设置。"),
-            t("Under Privacy & Security → Accessibility, switch \(Self.appName) on.", "在「隐私与安全性 → 辅助功能」里打开 \(Self.appName) 的开关。"),
-            t("Come back here. It starts working at once, no restart needed.", "回到这里即可，授权后立即生效，不需要重启。"),
-        ]
+    var permissions: String { t("Permissions", "权限") }
+    var permissionsHeadline: String { t("Before you start, grant access", "开始之前，先完成授权") }
+    var permissionsPromise: String { t("\(Self.appName) only watches for its own keys and drags. Nothing you type is recorded or sent anywhere.", "\(Self.appName) 只识别自己的按键和拖动手势，不记录也不上传你的任何输入。") }
+    var permissionsFootnote: String { t("You can change these any time in System Settings", "可随时在系统设置中更改") }
+    func permissionsReady(trigger: String, sideButton: Bool) -> String {
+        sideButton ? t("All set. Drag with \(trigger) to bring up the ping wheel.", "已就绪。按住\(trigger)拖动，试试呼出信号轮盘。")
+            : t("All set. Hold \(trigger) and drag to bring up the ping wheel.", "已就绪。按住 \(trigger) 拖动鼠标，试试呼出信号轮盘。")
     }
-    var accessStaleTitle: String { t("Accessibility is on, but not working", "辅助功能已打开，但没有生效") }
-    var accessStaleSteps: [String] {
-        [
-            t("macOS lists \(Self.appName) as allowed, yet input still can't be read. This is usually an entry left by an older copy.", "系统显示已授权，但 \(Self.appName) 仍然读不到输入，通常是旧版本留下的条目。"),
-            t("In the Accessibility list, select \(Self.appName) and remove it with “–”.", "在辅助功能列表里选中 \(Self.appName)，点「–」把它移除。"),
-            t("Add it again, switch it on, then press Try Again.", "重新添加并打开开关，然后点「重试」。"),
-        ]
+    var permAccessibility: String { t("Accessibility", "辅助功能") }
+    func permAccessibilityCaption(_ step: AppController.AccessStep, appName: String) -> String {
+        switch step {
+        case .granted, .ask: return t("Sees the trigger key and the drag that bring up a wheel", "识别触发键和拖动手势，用来呼出轮盘")
+        case .switchOn: return t("Switch on “\(appName)” in the list in System Settings. It takes effect at once", "在系统设置的列表里打开「\(appName)」的开关，打开后立即生效")
+        case .stale: return t("Listed as allowed, yet not working: usually an entry left by an older copy. Reset it, then allow again", "系统显示已允许，但没有生效，多半是旧版本留下的条目。重置后重新允许即可")
+        }
     }
-    var openSystemSettings: String { t("Open System Settings", "打开系统设置") }
+    var permLocalNetwork: String { t("Local network", "本地网络") }
+    func permLocalNetworkCaption(unavailable: Bool, appName: String) -> String {
+        unavailable ? t("Rooms can't reach your network. Check that “\(appName)” is switched on under Local Network", "房间连不上局域网，检查「本地网络」里是否打开了「\(appName)」")
+            : t("Connects directly to room members on your network. macOS asks the first time you join a room", "和同一网络里的房间成员直连。第一次加入房间时 macOS 会询问")
+    }
+    var requiredBadge: String { t("Required", "必需") }
+    var optionalBadge: String { t("Optional", "可选") }
+    var allow: String { t("Allow", "允许") }
+    var allowed: String { t("Allowed", "已允许") }
+    var openSettings: String { t("Open Settings", "打开设置") }
+    var resetAccess: String { t("Reset", "重置授权") }
+    var later: String { t("Later", "稍后") }
+    var getStarted: String { t("Get Started", "开始使用") }
+    var done: String { t("Done", "完成") }
     var tryAgain: String { t("Try Again", "重试") }
+    var accessCardHint: String { t("\(Self.appName) can't see the mouse or keyboard until it is allowed under Accessibility.", "在「辅助功能」里允许 \(Self.appName) 之后，才能识别按键和拖动。") }
+    var viewPermissions: String { t("Review Permissions", "查看权限") }
+    var permissionsRowHint: String { t("Accessibility and local network.", "辅助功能、本地网络。") }
 
     // MARK: Gesture pane
 

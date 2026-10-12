@@ -524,6 +524,10 @@ struct GeneralPane: View {
                 RowDivider()
                 SwitchRow(title: t.autoCheck, hint: t.autoCheckHint, isOn: app.binding(\.updates.checksAutomatically))
             }
+            RowDivider()
+            Row(title: t.permissions, hint: t.permissionsRowHint) {
+                Button(t.viewPermissions) { app.showPermissions() }
+            }
         }
         if !app.problems.isEmpty { Card { bullets(t.attention, app.problems) } }
         Card { bullets(t.goodToKnow, t.notes(stableSignature: AppController.hasStableSignature)) }

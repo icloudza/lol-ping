@@ -128,8 +128,8 @@ final class AppController: ObservableObject {
         }
         #endif
         // The app lives in the menu bar. The window opens by itself only when there is something to do in it.
-        if store.isFirstRun || !EventTap.isTrusted {
-            showSettings()
+        if !Self.hasFinishedOnboarding || !EventTap.isTrusted {
+            showPermissions(atLaunch: true)
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [self] in overlays.notice(text.runningInMenuBar, text.runningInMenuBarHint) }
         }
@@ -226,20 +226,100 @@ final class AppController: ObservableObject {
         case .refused:
             overlays.dismissWheel()
             if EventTap.isTrusted { access = .stale } else { waitForAccess() }
-            showSettings()
+            // Unless it is up already: showing it again would replace the launch window and what follows it.
+            if !PermissionsWindowController.shared.isVisible { showPermissions() }
         }
         refreshStatusItem()
     }
 
-    func openAccessibilitySettings() {
-        EventTap.requestTrust()
-        if let pane = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") { NSWorkspace.shared.open(pane) }
-        if !EventTap.isTrusted { waitForAccess() }
+    /// What is left to do about Accessibility.
+    enum AccessStep {
+        case granted
+        /// Never asked: macOS can still show its own prompt.
+        case ask
+        /// Asked before: the switch in System Settings is what is missing.
+        case switchOn
+        /// Listed as allowed and still refused.
+        case stale
+    }
+
+    private static let askedForAccessKey = "permissions.askedForAccessibility"
+    private static let onboardingKey = "permissions.onboardingDone"
+
+    var accessStep: AccessStep {
+        switch access {
+        case .granted: return .granted
+        case .stale: return .stale
+        case .missing: return UserDefaults.standard.bool(forKey: Self.askedForAccessKey) ? .switchOn : .ask
+        }
+    }
+
+    /// Whether the user has been through the permissions window once.
+    static var hasFinishedOnboarding: Bool {
+        get { UserDefaults.standard.bool(forKey: onboardingKey) }
+        set { UserDefaults.standard.set(newValue, forKey: onboardingKey) }
+    }
+
+    /// The app's name as System Settings lists it ("LolPing-Dev" for a development build).
+    static let systemName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? L10n.appName
+
+    /// The Accessibility row's button. The first time, macOS shows its own prompt, which also puts the app in the
+    /// list; after that only the switch in System Settings is missing, so the list is opened directly.
+    func requestAccess() {
+        if accessStep == .ask {
+            UserDefaults.standard.set(true, forKey: Self.askedForAccessKey)
+            NSApp.activate(ignoringOtherApps: true) // or the prompt may come up behind another app
+            EventTap.requestTrust()
+        } else {
+            openPrivacySettings("Privacy_Accessibility")
+        }
+        if EventTap.isTrusted { beginWatchingInput() } else { waitForAccess() }
+        objectWillChange.send()
+    }
+
+    /// Opens a pane of Privacy & Security in System Settings.
+    func openPrivacySettings(_ anchor: String) {
+        // The address used since macOS 13 first, then the older one; the anchors are the same.
+        for address in ["x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?\(anchor)",
+                        "x-apple.systempreferences:com.apple.preference.security?\(anchor)"] {
+            if let url = URL(string: address), NSWorkspace.shared.open(url) { break }
+        }
     }
 
     func retryAccess() {
         beginWatchingInput()
         refreshStatusItem()
+    }
+
+    /// For an entry that is switched on and still doesn't work: removes this app's entry from the Accessibility
+    /// list, so that allowing it again makes a fresh one.
+    func resetAccess() {
+        let reset = Process()
+        reset.executableURL = URL(fileURLWithPath: "/usr/bin/tccutil")
+        reset.arguments = ["reset", "Accessibility", Bundle.main.bundleIdentifier ?? ""]
+        reset.terminationHandler = { [weak self] _ in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                UserDefaults.standard.set(false, forKey: Self.askedForAccessKey)
+                self.waitForAccess()
+                self.requestAccess()
+            }
+        }
+        do { try reset.run() } catch { NSLog("LolPing: tccutil: %@", error.localizedDescription) }
+    }
+
+    func showPermissions(atLaunch: Bool = false) {
+        PermissionsWindowController.shared.show(atLaunch: atLaunch) { [weak self] in
+            guard let self, atLaunch, !self.isQuitting else { return }
+            // The first time round, the settings are where to go next; later launches just say where the app lives.
+            let firstTime = !Self.hasFinishedOnboarding
+            Self.hasFinishedOnboarding = true
+            if firstTime, self.access == .granted {
+                self.showSettings()
+            } else {
+                self.overlays.notice(self.text.runningInMenuBar, self.text.runningInMenuBarHint)
+            }
+        }
     }
 
     /// While the settings window records a key, the tap must not react to it.

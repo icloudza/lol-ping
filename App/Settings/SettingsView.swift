@@ -57,7 +57,7 @@ struct SettingsView: View {
             Divider().ignoresSafeArea()
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
-                    if app.access != .granted { AccessCard(stale: app.access == .stale) }
+                    if app.access != .granted { AccessCard() }
                     StatusCard()
                     Text(pane.title(t)).font(.title2.weight(.semibold)).padding(.top, 6)
                     switch pane {
@@ -344,23 +344,16 @@ struct StatusCard: View {
     }
 }
 
-/// Shown until the app is allowed under Accessibility. `stale`: it is listed as allowed and still doesn't work.
+/// Shown until the app is allowed under Accessibility. The permissions window has the steps.
 struct AccessCard: View {
     @EnvironmentObject var app: AppController
-    let stale: Bool
 
     var body: some View {
         let t = app.text
         NoticeCard(symbol: "lock.shield") {
-            Text(stale ? t.accessStaleTitle : t.accessTitle).font(.headline)
-            ForEach(Array((stale ? t.accessStaleSteps : t.accessSteps).enumerated()), id: \.offset) { index, step in
-                Text("\(index + 1). \(step)").font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            }
-            HStack {
-                Button(t.openSystemSettings) { app.openAccessibilitySettings() }.buttonStyle(.borderedProminent)
-                if stale { Button(t.tryAgain) { app.retryAccess() } }
-            }
-            .padding(.top, 4)
+            Text(t.statusNeedsAccess).font(.headline)
+            Text(t.accessCardHint).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            Button(t.viewPermissions) { app.showPermissions() }.buttonStyle(.borderedProminent).padding(.top, 4)
         }
     }
 }
