@@ -351,6 +351,22 @@ struct L10n: Equatable {
     func missingFile(_ file: String) -> String { t("Missing file: \(file)", "缺少资源文件：\(file)") }
     var emoteKeyTurnedOff: String { t("The saved emote key clashed with another key, so the emote wheel was turned off.", "保存的表情键与其他按键冲突，表情轮盘已被关闭。") }
 
+    // MARK: Main menu
+
+    func menuAbout(_ name: String) -> String { t("About \(name)", "关于 \(name)") }
+    func menuHide(_ name: String) -> String { t("Hide \(name)", "隐藏 \(name)") }
+    func menuQuitApp(_ name: String) -> String { t("Quit \(name)", "退出 \(name)") }
+    var menuEdit: String { t("Edit", "编辑") }
+    var menuUndo: String { t("Undo", "撤销") }
+    var menuRedo: String { t("Redo", "重做") }
+    var menuCut: String { t("Cut", "剪切") }
+    var menuCopy: String { t("Copy", "拷贝") }
+    var menuPaste: String { t("Paste", "粘贴") }
+    var menuSelectAll: String { t("Select All", "全选") }
+    var menuWindow: String { t("Window", "窗口") }
+    var menuClose: String { t("Close", "关闭") }
+    var menuMinimize: String { t("Minimize", "最小化") }
+
     // MARK: Menu bar
 
     var menuEnabled: String { t("Enable \(Self.appName)", "启用 \(Self.appName)") }

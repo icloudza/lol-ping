@@ -17,7 +17,7 @@ packages:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.0.2"
+    MARKETING_VERSION: "1.0.3"
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_TEAM: KTP97H9YFF
     CODE_SIGN_STYLE: Automatic
@@ -68,6 +68,10 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSUIElement: true
+        # The app's own text comes from L10n.swift, not from .lproj folders, so macOS would take it for English-only
+        # and show everything it draws itself in English: the update windows, open panels, standard alerts.
+        # Naming the languages here makes those follow the user's language too.
+        CFBundleLocalizations: [en, zh-Hans]
         LSApplicationCategoryType: public.app-category.utilities
         NSHumanReadableCopyright: "Code under the MIT licence. Ping and emote art and sounds © Riot Games."
         NSLocalNetworkUsageDescription: "LolPing finds the other people in your room on the local network and sends them your pings."

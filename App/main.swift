@@ -23,7 +23,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         DistributedNotificationCenter.default().addObserver(forName: Self.openSettingsNote, object: nil, queue: .main) { _ in
             AppController.shared.showSettings()
         }
-        NSApp.mainMenu = MainMenu.build()
+        NSApp.mainMenu = MainMenu.build(AppController.shared.text)
         #if DEBUG
         // Development only: `LOLPING_DEMO=brand:<file.png>` writes the sidebar's header as a picture, without opening a window.
         if let demo = ProcessInfo.processInfo.environment["LOLPING_DEMO"], demo.hasPrefix("brand:") {
@@ -84,6 +84,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let began = CFAbsoluteTimeGetCurrent()
             let state = sounds.debugState()
             print(String(format: "hardware up after %.0f ms: running=%@ playing=%d", (CFAbsoluteTimeGetCurrent() - began) * 1000, state.running ? "yes" : "no", state.playing))
+            exit(0)
+        }
+        // Development only: `LOLPING_DEMO=languages` prints which language macOS has picked for the app and what
+        // Sparkle's own windows will say in it.
+        if ProcessInfo.processInfo.environment["LOLPING_DEMO"] == "languages" {
+            print("app localizations:", Bundle.main.localizations.sorted(), "picked:", Bundle.main.preferredLocalizations)
+            if let sparkle = Bundle.allFrameworks.first(where: { $0.bundleIdentifier == "org.sparkle-project.Sparkle" }) {
+                for key in ["Checking for updates…", "You’re up to date!", "Install Update", "Cancel"] {
+                    print("Sparkle:", key, "->", sparkle.localizedString(forKey: key, value: nil, table: "Sparkle"))
+                }
+            } else {
+                print("Sparkle framework not loaded")
+            }
             exit(0)
         }
         // Development only: `LOLPING_DEMO=switch:<file.png>` draws the menu's switch rows (on, off, unavailable) into a
@@ -178,32 +191,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 /// The app, Edit and Window menus, so ⌘Q, ⌘W and the clipboard shortcuts work in the settings window.
+/// The menu bar shown while one of the app's windows is open.
 enum MainMenu {
-    static func build() -> NSMenu {
+    static func build(_ t: L10n) -> NSMenu {
         let main = NSMenu()
         let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "LolPing"
 
         let app = NSMenu()
-        app.addItem(withTitle: "About \(name)", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        app.addItem(withTitle: t.menuAbout(name), action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
         app.addItem(.separator())
-        app.addItem(withTitle: "Hide \(name)", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
-        app.addItem(withTitle: "Quit \(name)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        app.addItem(withTitle: t.menuHide(name), action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
+        app.addItem(withTitle: t.menuQuitApp(name), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         main.addItem(submenu(app, title: name))
 
-        let edit = NSMenu(title: "Edit")
-        edit.addItem(withTitle: "Undo", action: Selector(("undo:")), keyEquivalent: "z")
-        edit.addItem(withTitle: "Redo", action: Selector(("redo:")), keyEquivalent: "Z")
+        let edit = NSMenu(title: t.menuEdit)
+        edit.addItem(withTitle: t.menuUndo, action: Selector(("undo:")), keyEquivalent: "z")
+        edit.addItem(withTitle: t.menuRedo, action: Selector(("redo:")), keyEquivalent: "Z")
         edit.addItem(.separator())
-        edit.addItem(withTitle: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x")
-        edit.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
-        edit.addItem(withTitle: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
-        edit.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
-        main.addItem(submenu(edit, title: "Edit"))
+        edit.addItem(withTitle: t.menuCut, action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+        edit.addItem(withTitle: t.menuCopy, action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+        edit.addItem(withTitle: t.menuPaste, action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        edit.addItem(withTitle: t.menuSelectAll, action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        main.addItem(submenu(edit, title: t.menuEdit))
 
-        let window = NSMenu(title: "Window")
-        window.addItem(withTitle: "Close", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
-        window.addItem(withTitle: "Minimize", action: #selector(NSWindow.performMiniaturize(_:)), keyEquivalent: "m")
-        main.addItem(submenu(window, title: "Window"))
+        let window = NSMenu(title: t.menuWindow)
+        window.addItem(withTitle: t.menuClose, action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
+        window.addItem(withTitle: t.menuMinimize, action: #selector(NSWindow.performMiniaturize(_:)), keyEquivalent: "m")
+        main.addItem(submenu(window, title: t.menuWindow))
         NSApp.windowsMenu = window
         return main
     }

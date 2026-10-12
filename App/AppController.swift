@@ -67,6 +67,18 @@ final class AppController: ObservableObject {
         updater = AppUpdater.isConfigured ? AppUpdater() : nil
         updates = updater?.status
         store.onChange = { [unowned self] new, old in preferencesChanged(new, old) }
+        Self.tellSystem(language: store.preferences.language)
+    }
+
+    /// The windows macOS and Sparkle draw (update windows, open panels) take their language from the system, not
+    /// from L10n. Recording the app's own choice as this app's language preference makes them agree with it; macOS
+    /// reads it when the app starts, so a change shows there from the next launch on.
+    private static func tellSystem(language: LanguageChoice) {
+        switch language {
+        case .system: UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        case .english: UserDefaults.standard.set(["en"], forKey: "AppleLanguages")
+        case .chinese: UserDefaults.standard.set(["zh-Hans"], forKey: "AppleLanguages")
+        }
     }
 
     // MARK: - Starting and stopping
@@ -349,6 +361,8 @@ final class AppController: ObservableObject {
         if new.language != old.language {
             text = L10n(language: AppLanguage.resolve(new.language))
             statusItem?.setText(text)
+            NSApp.mainMenu = MainMenu.build(text)
+            Self.tellSystem(language: new.language)
             refreshProblems()
         }
         tap.apply(GestureConfig(new, enabled: isEnabled))
